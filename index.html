@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="lo">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ລະບົບບໍລິຫານວິທະຍາໄລ</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       ຕົວແປສີ (ປ່ຽນສີທັງລະບົບໄດ້ຈາກບ່ອນນີ້)
+       ========================================================= */
+    :root {
+      --primary: #1e4fa3;
+      --dark: #153a78;
+      --bg: #f3f6fb;
+      --line: #dde3ee;
+      --text: #1d2433;
+      --muted: #6b7385;
+      --ok: #2e7d32;
+      --danger: #c62828;
+    }
+
+    /* =========================================================
+       ພື້ນຖານ
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans Lao', sans-serif;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    /* =========================================================
+       ສ່ວນຫົວ (Header)
+       ========================================================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       ໂຄງໜ້າ: ເມນູຊ້າຍ + ເນື້ອຫາ
+       ========================================================= */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 54px);
+    }
+
+    nav {
+      width: 230px;
+      flex-shrink: 0;
+      padding: 12px 0;
+      background: var(--dark);
+    }
+
+    nav a {
+      display: block;
+      padding: 12px 20px;
+      color: #cfdcf5;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, .08);
+    }
+
+    nav a.active {
+      background: rgba(255, 255, 255, .15);
+      color: #fff;
+      font-weight: 600;
+      border-left-color: #ffd54f;
+    }
+
+    main {
+      flex: 1;
+      min-width: 0;
+      padding: 20px;
+    }
+
+    /* =========================================================
+       ກາດ (Card) ແລະ ສະຖິຕິ
+       ========================================================= */
+    .card {
+      margin-bottom: 16px;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .muted {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      padding: 10px 20px;
+      background: #eef2fa;
+      border-radius: 8px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 24px;
+      color: var(--primary);
+    }
+
+    .note {
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      background: #fff3cd;
+      color: #664d03;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       ຟອມ ແລະ ປຸ່ມ
+       ========================================================= */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    input,
+    select,
+    button {
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      min-width: 0;
+      padding: 8px 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 2px solid #9db9ee;
+      border-color: var(--primary);
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--dark);
+    }
+
+    .btn.sec {
+      background: #e8edf6;
+      color: var(--text);
+    }
+
+    .btn.sec:hover {
+      background: #d8e0ef;
+    }
+
+    .btn.ok {
+      background: var(--ok);
+    }
+
+    .btn.danger {
+      background: var(--danger);
+    }
+
+    .btn.sm {
+      padding: 4px 10px;
+      font-size: 13px;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      background: #ffe9a8;
+      color: #6a4b00;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    /* =========================================================
+       ຕາຕະລາງ
+       ========================================================= */
+    .tablewrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #eef2fa;
+    }
+
+    tr:hover td {
+      background: #fafcff;
+    }
+
+    .thumb {
+      display: block;
+      width: 40px;
+      height: 50px;
+      object-fit: cover;
+      background: #dfe5f0;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+    }
+
+    /* =========================================================
+       ປ໊ອບອັບ (Modal) ແລະ ຟອມກວ້າງ
+       ========================================================= */
+    #modalbg {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 30px 12px;
+      overflow: auto;
+      background: rgba(0, 0, 0, .45);
+    }
+
+    #modal {
+      width: 100%;
+      max-width: 760px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    #modal h3 {
+      margin: 0 0 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .grid label {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid input,
+    .grid select {
+      width: 100%;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .photo-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .photo-box img {
+      width: 90px;
+      height: 112px;
+      object-fit: cover;
+      background: #eee;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .detail td {
+      white-space: normal;
+    }
+
+    .detail td:first-child {
+      width: 42%;
+      color: var(--muted);
+    }
+
+    /* ຂໍ້ຄວາມແຈ້ງເຕືອນລອຍ */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      z-index: 99;
+      display: none;
+      padding: 10px 18px;
+      background: #222;
+      color: #fff;
+      border-radius: 8px;
+      transform: translateX(-50%);
+    }
+
+    /* =========================================================
+       ໜ້າຈໍນ້ອຍ (ມືຖື) ແລະ ການພິມ
+       ========================================================= */
+    @media (max-width: 760px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      nav {
+        display: flex;
+        width: 100%;
+        padding: 0;
+        overflow-x: auto;
+      }
+
+      nav a {
+        white-space: nowrap;
+        border-left: 0;
+        border-bottom: 3px solid transparent;
+      }
+
+      nav a.active {
+        border-bottom-color: #ffd54f;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+
+      header,
+      nav,
+      .toolbar {
+        display: none !important;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .card {
+        border: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== ສ່ວນຫົວ ===== -->
+  <header>
+    <h1>🎓 ລະບົບບໍລິຫານວິທະຍາໄລ</h1>
+    <div class="header-right" id="userbox"></div>
+  </header>
+
+  <!-- ===== ເມນູຊ້າຍ + ເນື້ອຫາ ===== -->
+  <div class="layout">
+    <nav id="nav"></nav>
+    <main id="main"></main>
+  </div>
+
+  <!-- ===== ປ໊ອບອັບ ແລະ ຂໍ້ຄວາມແຈ້ງເຕືອນ ===== -->
+  <div id="modalbg">
+    <div id="modal"></div>
+  </div>
+  <div id="toast"></div>
+
+  <!-- ໄລບຣາຣີ: Supabase (ຖານຂໍ້ມູນ) ແລະ SheetJS (ສົ່ງອອກ Excel) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script>
+    /* =========================================================
+       1) ຕັ້ງຄ່າ  ← ໃສ່ຄ່າຈາກ Supabase ຂອງທ່ານຢູ່ບ່ອນນີ້
+       Supabase > Project Settings > API
+       ========================================================= */
+    const SUPABASE_URL = 'https://vlllvqxpbinvlmeptuyy.supabase.co';   // ຕົວຢ່າງ: https://xxxxxxxx.supabase.co
+    const SUPABASE_KEY = 'sb_publishable_xH5ApBOkR3SLAu___Lwo1w_6t2T9CqG';   // Publishable key (ຫຼື anon public key)
+
+    const TABLE_STUDENT = 'student';
+    const TABLE_YEARS = 'academic_years';
+
+    const sb = (SUPABASE_URL && SUPABASE_KEY && window.supabase)
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+      : null;
+
+
+    /* =========================================================
+       2) ເມນູ
+       ຢາກເພີ່ມເມນູໃໝ່: ເພີ່ມອີກແຖວໃນ MENUS ແລ້ວຂຽນຟັງຊັນ render ຂອງມັນ
+       ========================================================= */
+    const MENUS = [
+      { id: 'home',     label: '🏠 ໜ້າຫຼັກ',          render: renderHome },
+      { id: 'students', label: '👨‍🎓 ປະຫວັດນັກສຶກສາ', render: renderStudents },
+      { id: 'years',    label: '📅 ສົກຮຽນ',           render: renderYears },
+      { id: 'reports',  label: '📊 ລາຍງານ',            render: renderReports },
+    ];
+
+
+    /* =========================================================
+       3) ຂໍ້ມູນຄົງທີ່ ແລະ ສະຖານະ
+       ========================================================= */
+    const PROVINCES = [
+      'ນະຄອນຫຼວງວຽງຈັນ', 'ຜົ້ງສາລີ', 'ຫຼວງນໍ້າທາ', 'ອຸດົມໄຊ', 'ບໍ່ແກ້ວ', 'ຫຼວງພະບາງ',
+      'ຫົວພັນ', 'ໄຊຍະບູລີ', 'ຊຽງຂວາງ', 'ວຽງຈັນ', 'ບໍລິຄຳໄຊ', 'ຄຳມ່ວນ',
+      'ສະຫວັນນະເຂດ', 'ສາລະວັນ', 'ເຊກອງ', 'ຈຳປາສັກ', 'ອັດຕະປື', 'ໄຊສົມບູນ',
+    ];
+
+    const LAO_MONTHS = ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ', 'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'];
+    const EN_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const YEAR_PATTERN = /^\d{4}-\d{4}$/;
+
+    const state = {
+      menu: 'home',
+      user: null,        // ມີຄ່າ = ຜູ້ບໍລິຫານເຂົ້າສູ່ລະບົບແລ້ວ
+      years: [],
+      students: [],
+    };
+
+    const studentFilter = { q: '', year: '' };
+    const reportFilter = { q: '', year: '', gender: '', province: '' };
+    let currentPhoto = '';
+
+
+    /* =========================================================
+       4) ຕົວຊ່ວຍ
+       ========================================================= */
+    const $ = id => document.getElementById(id);
+
+    const isAdmin = () => !!state.user;
+
+    // ປ້ອງກັນ HTML injection ເວລາສະແດງຂໍ້ມູນ
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    }[c]));
+
+    // ຍອມຮັບສະເພາະຮູບທີ່ເປັນ data:image
+    const safeImg = s => (typeof s === 'string' && s.startsWith('data:image/')) ? s : '';
+
+    function toast(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    function openModal(html) {
+      $('modal').innerHTML = html;
+      $('modalbg').style.display = 'flex';
+    }
+
+    function closeModal() {
+      $('modalbg').style.display = 'none';
+    }
+
+    $('modalbg').addEventListener('mousedown', e => {
+      if (e.target.id === 'modalbg') closeModal();
+    });
+
+    // ແປງ 2000-09-01 → { lo: '01 ກັນຍາ 2000', en: '01 September 2000' }
+    function formatDates(iso) {
+      if (!iso) return { lo: '', en: '' };
+      const [y, m, d] = iso.split('-').map(Number);
+      const dd = String(d).padStart(2, '0');
+      return {
+        lo: `${dd} ${LAO_MONTHS[m - 1]} ${y}`,
+        en: `${dd} ${EN_MONTHS[m - 1]} ${y}`,
+      };
+    }
+
+    const yearOptions = selected =>
+      state.years.map(y =>
+        `<option ${y.year_label === selected ? 'selected' : ''}>${esc(y.year_label)}</option>`
+      ).join('');
+
+
+    /* =========================================================
+       5) ຖານຂໍ້ມູນ (Supabase)
+       ========================================================= */
+    async function loadAll() {
+      if (!sb) return;
+
+      const [years, students] = await Promise.all([
+        sb.from(TABLE_YEARS).select('*').order('year_label', { ascending: false }),
+        sb.from(TABLE_STUDENT).select('*').order('id', { ascending: false }),
+      ]);
+
+      if (years.error) toast('ໂຫຼດສົກຮຽນບໍ່ສຳເລັດ: ' + years.error.message);
+      if (students.error) toast('ໂຫຼດນັກສຶກສາບໍ່ສຳເລັດ: ' + students.error.message);
+
+      state.years = years.data || [];
+      state.students = students.data || [];
+    }
+
+    async function reload() {
+      await loadAll();
+      renderShell();
+    }
+
+
+    /* =========================================================
+       6) ໂຄງໜ້າຈໍ ແລະ ການປ່ຽນເມນູ
+       ========================================================= */
+    function renderShell() {
+      // ກ່ອງຜູ້ໃຊ້ (ເທິງຂວາ)
+      $('userbox').innerHTML = isAdmin()
+        ? `<span>👤 ${esc(state.user.email)}</span>
+           <button class="btn sec sm" onclick="doLogout()">ອອກຈາກລະບົບ</button>`
+        : `<span class="badge">ໂໝດເບິ່ງຂໍ້ມູນ</span>
+           <button class="btn sec sm" onclick="openLogin()">🔒 ເຂົ້າສູ່ລະບົບ (ຜູ້ບໍລິຫານ)</button>`;
+
+      // ເມນູຊ້າຍ
+      $('nav').innerHTML = MENUS.map(m =>
+        `<a class="${m.id === state.menu ? 'active' : ''}" onclick="goMenu('${m.id}')">${m.label}</a>`
+      ).join('');
+
+      // ເນື້ອຫາຂອງເມນູທີ່ເລືອກ
+      const current = MENUS.find(m => m.id === state.menu) || MENUS[0];
+      current.render($('main'));
+    }
+
+    function goMenu(id) {
+      state.menu = id;
+      renderShell();
+    }
+
+    const notConnectedNote = () => sb ? '' : `
+      <div class="note">
+        ⚠ ຍັງບໍ່ໄດ້ເຊື່ອມ Supabase — ໃສ່ SUPABASE_URL ແລະ SUPABASE_KEY ໃນໄຟລ໌ index.html (ຫົວຂໍ້ "1) ຕັ້ງຄ່າ")
+      </div>`;
+
+
+    /* =========================================================
+       7) ເຂົ້າສູ່ລະບົບ / ອອກຈາກລະບົບ (ສະເພາະຜູ້ບໍລິຫານ)
+       ========================================================= */
+    function openLogin() {
+      if (!sb) return toast('ຍັງບໍ່ໄດ້ເຊື່ອມ Supabase');
+
+      openModal(`
+        <h3>🔒 ເຂົ້າສູ່ລະບົບຜູ້ບໍລິຫານ</h3>
+        <form onsubmit="doLogin(event)" class="grid">
+          <div class="full">
+            <label>ອີເມລ</label>
+            <input id="lg_email" type="email" required autofocus>
+          </div>
+          <div class="full">
+            <label>ລະຫັດຜ່ານ</label>
+            <input id="lg_pass" type="password" required>
+          </div>
+          <div class="full actions">
+            <button type="button" class="btn sec" onclick="closeModal()">ຍົກເລີກ</button>
+            <button class="btn">ເຂົ້າສູ່ລະບົບ</button>
+          </div>
+        </form>`);
+    }
+
+    async function doLogin(e) {
+      e.preventDefault();
+      const { error } = await sb.auth.signInWithPassword({
+        email: $('lg_email').value.trim(),
+        password: $('lg_pass').value,
+      });
+
+      if (error) return toast('ເຂົ້າສູ່ລະບົບບໍ່ສຳເລັດ: ອີເມລ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ' + error.message);
+
+      closeModal();
+      toast('ເຂົ້າສູ່ລະບົບສຳເລັດ');
+    }
+
+    async function doLogout() {
+      await sb.auth.signOut();
+      toast('ອອກຈາກລະບົບແລ້ວ');
+    }
+
+
+    /* =========================================================
+       8) ໜ້າຫຼັກ
+       ========================================================= */
+    function renderHome(el) {
+      el.innerHTML = `
+        <div class="card">
+          <h2>ຍິນດີຕ້ອນຮັບ</h2>
+          ${notConnectedNote()}
+
+          <div class="stats">
+            <div class="stat"><b>${state.students.length}</b>ນັກສຶກສາ</div>
+            <div class="stat"><b>${state.years.length}</b>ສົກຮຽນ</div>
+          </div>
+
+          <p class="muted">
+            ເລືອກເມນູທາງຊ້າຍເພື່ອເບິ່ງຂໍ້ມູນ. ທຸກຄົນເພີ່ມປະຫວັດນັກສຶກສາໄດ້,
+            ການແກ້ໄຂ/ລົບ ຕ້ອງເຂົ້າສູ່ລະບົບຜູ້ບໍລິຫານ.
+          </p>
+        </div>`;
+    }
+
+
+    /* =========================================================
+       9) ສົກຮຽນ
+       ========================================================= */
+    function renderYears(el) {
+      el.innerHTML = `
+        <div class="card">
+          <h2>ສົກຮຽນ</h2>
+          ${notConnectedNote()}
+
+          ${isAdmin() ? `
+            <div class="toolbar">
+              <input id="y_new" placeholder="ຕົວຢ່າງ: 2026-2027" maxlength="9">
+              <button class="btn ok" onclick="addYear()">+ ເພີ່ມສົກຮຽນ</button>
+            </div>` : `<p class="muted" style="margin-bottom:12px">ໂໝດເບິ່ງຂໍ້ມູນ — ຕ້ອງເຂົ້າສູ່ລະບົບຈຶ່ງເພີ່ມ/ລົບໄດ້</p>`}
+
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ລ/ດ</th>
+                  <th>ສົກຮຽນ</th>
+                  ${isAdmin() ? '<th>ຈັດການ</th>' : ''}
+                </tr>
+              </thead>
+              <tbody>
+                ${state.years.length ? state.years.map((y, i) => `
+                  <tr>
+                    <td>${i + 1}</td>
+                    <td>${esc(y.year_label)}</td>
+                    ${isAdmin() ? `<td><button class="btn sm danger" onclick="deleteYear(${y.id})">ລົບ</button></td>` : ''}
+                  </tr>`).join('') : '<tr><td colspan="3">ຍັງບໍ່ມີຂໍ້ມູນ</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
+    async function addYear() {
+      if (!isAdmin()) return;
+
+      const label = $('y_new').value.trim();
+      if (!YEAR_PATTERN.test(label)) return toast('ຮູບແບບຕ້ອງເປັນ 2026-2027');
+
+      const { error } = await sb.from(TABLE_YEARS).insert({ year_label: label });
+      if (error) return toast('ເພີ່ມບໍ່ສຳເລັດ: ' + error.message);
+
+      toast('ບັນທຶກແລ້ວ');
+      reload();
+    }
+
+    async function deleteYear(id) {
+      if (!isAdmin()) return;
+
+      const year = state.years.find(y => y.id === id);
+      if (state.students.some(s => s.year_to_year === year.year_label)) {
+        return toast('ລົບບໍ່ໄດ້: ມີນັກສຶກສາໃນສົກຮຽນນີ້');
+      }
+      if (!confirm(`ຢືນຢັນການລົບສົກຮຽນ ${year.year_label}?`)) return;
+
+      const { error } = await sb.from(TABLE_YEARS).delete().eq('id', id);
+      if (error) return toast('ລົບບໍ່ສຳເລັດ: ' + error.message);
+
+      toast('ລົບແລ້ວ');
+      reload();
+    }
+
+
+    /* =========================================================
+       10) ປະຫວັດນັກສຶກສາ: ລາຍການ
+       ========================================================= */
+    function filterStudents(f) {
+      const keyword = (f.q || '').toLowerCase();
+
+      return state.students.filter(s =>
+        (!f.year || s.year_to_year === f.year) &&
+        (!f.gender || s.gender === f.gender) &&
+        (!f.province || s.birth_province === f.province) &&
+        (!keyword || [s.full_name_lao, s.full_name_eng, s.phone].join(' ').toLowerCase().includes(keyword))
+      );
+    }
+
+    function renderStudents(el) {
+      el.innerHTML = `
+        <div class="card">
+          <h2>ປະຫວັດນັກສຶກສາ</h2>
+          ${notConnectedNote()}
+
+          <div class="toolbar">
+            <input placeholder="🔍 ຄົ້ນຫາຊື່ / ເບີໂທ" value="${esc(studentFilter.q)}"
+                   oninput="studentFilter.q = this.value; drawStudentRows()">
+
+            <select onchange="studentFilter.year = this.value; drawStudentRows()">
+              <option value="">ທຸກສົກຮຽນ</option>
+              ${yearOptions(studentFilter.year)}
+            </select>
+
+            <span class="spacer"></span>
+
+            <button class="btn ok" onclick="openStudentForm()">+ ເພີ່ມນັກສຶກສາ</button>
+          </div>
+
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ຮູບ</th>
+                  <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+                  <th>Name</th>
+                  <th>ເພດ</th>
+                  <th>ວັນເກີດ</th>
+                  <th>ແຂວງເກີດ</th>
+                  <th>ເບີໂທ</th>
+                  <th>ສົກຮຽນ</th>
+                  <th>ຈັດການ</th>
+                </tr>
+              </thead>
+              <tbody id="s_rows"></tbody>
+            </table>
+          </div>
+        </div>`;
+
+      drawStudentRows();
+    }
+
+    function drawStudentRows() {
+      const body = $('s_rows');
+      if (!body) return;
+
+      const list = filterStudents(studentFilter);
+
+      body.innerHTML = list.length
+        ? list.map(s => `
+            <tr>
+              <td>${safeImg(s.image_) ? `<img class="thumb" src="${safeImg(s.image_)}">` : '<span class="thumb"></span>'}</td>
+              <td>${esc(s.full_name_lao)}</td>
+              <td>${esc(s.full_name_eng)}</td>
+              <td>${esc(s.gender)}</td>
+              <td>${esc(s.dob_lao)}</td>
+              <td>${esc(s.birth_province)}</td>
+              <td>${esc(s.phone)}</td>
+              <td>${esc(s.year_to_year)}</td>
+              <td>
+                <button class="btn sm sec" onclick="viewStudent(${s.id})">ເບິ່ງ</button>
+                ${isAdmin() ? `
+                  <button class="btn sm" onclick="openStudentForm(${s.id})">ແກ້ໄຂ</button>
+                  <button class="btn sm danger" onclick="deleteStudent(${s.id})">ລົບ</button>` : ''}
+              </td>
+            </tr>`).join('')
+        : '<tr><td colspan="9">ບໍ່ພົບຂໍ້ມູນ</td></tr>';
+    }
+
+    function viewStudent(id) {
+      const s = state.students.find(x => x.id === id);
+      if (!s) return;
+
+      const rows = [
+        ['ສົກຮຽນ', s.year_to_year],
+        ['ຊື່ ແລະ ນາມສະກຸນ (ລາວ)', s.full_name_lao],
+        ['Name and Surname (English)', s.full_name_eng],
+        ['ເພດ', s.gender],
+        ['ວັນເດືອນປີເກີດ (ລາວ)', s.dob_lao],
+        ['Date of birth (English)', s.dob_eng],
+        ['ບ້ານເກີດ', s.birth_village],
+        ['ເມືອງເກີດ', s.birth_district],
+        ['ແຂວງເກີດ', s.birth_province],
+        ['ຮຽນຈົບ ມ.7 ຈາກ', s.high_school],
+        ['ເບີໂທ', s.phone],
+        ['ເບີໂທພໍ່', s.father_phone],
+        ['ເບີໂທແມ່', s.mother_phone],
+        ['ເບີໂທສຸກເສີນ', s.emergency_phone],
+      ];
+
+      openModal(`
+        <h3>ຂໍ້ມູນນັກສຶກສາ</h3>
+        <div class="photo-box" style="margin-bottom:12px">
+          <img src="${safeImg(s.image_)}">
+        </div>
+        <table class="detail">
+          ${rows.map(r => `<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}
+        </table>
+        <div class="actions">
+          <button class="btn sec" onclick="closeModal()">ປິດ</button>
+        </div>`);
+    }
+
+
+    /* =========================================================
+       11) ປະຫວັດນັກສຶກສາ: ຟອມເພີ່ມ / ແກ້ໄຂ / ລົບ (ສະເພາະຜູ້ບໍລິຫານ)
+       ========================================================= */
+    function openStudentForm(id) {
+      // ເພີ່ມໃໝ່: ທຸກຄົນເຮັດໄດ້ | ແກ້ໄຂ: ສະເພາະຜູ້ບໍລິຫານ
+      if (id && !isAdmin()) return openLogin();
+      if (!state.years.length) {
+        return toast(isAdmin()
+          ? 'ກະລຸນາເພີ່ມສົກຮຽນກ່ອນ (ເມນູ ສົກຮຽນ)'
+          : 'ຍັງບໍ່ມີສົກຮຽນ ກະລຸນາແຈ້ງຜູ້ບໍລິຫານ');
+      }
+
+      const s = id ? state.students.find(x => x.id === id) : {};
+      currentPhoto = s.image_ || '';
+
+      // ຊ່ວຍສ້າງຊ່ອງປ້ອນຂໍ້ມູນ
+      const field = (key, label, attrs = '') => `
+        <div>
+          <label>${label}</label>
+          <input id="f_${key}" value="${esc(s[key])}" ${attrs}>
+        </div>`;
+
+      openModal(`
+        <h3>${id ? 'ແກ້ໄຂ' : 'ເພີ່ມ'}ປະຫວັດນັກສຶກສາ</h3>
+
+        <form onsubmit="saveStudent(event, ${id || 0})">
+          <div class="grid">
+
+            <div>
+              <label>ເລືອກສົກຮຽນ *</label>
+              <select id="f_year_to_year" required>${yearOptions(s.year_to_year)}</select>
+            </div>
+
+            <div class="photo-box">
+              <img id="f_preview" src="${safeImg(currentPhoto)}">
+              <div>
+                <label>ຮູບພາບ</label>
+                <input type="file" accept="image/*" onchange="pickPhoto(this)">
+              </div>
+            </div>
+
+            ${field('full_name_lao', 'ຊື່ ແລະ ນາມສະກຸນ (ພາສາລາວ) *', 'required')}
+            ${field('full_name_eng', 'Name and Surname (English) *', 'required')}
+
+            <div>
+              <label>ເພດ *</label>
+              <select id="f_gender" required>
+                <option ${s.gender === 'ຊາຍ' ? 'selected' : ''}>ຊາຍ</option>
+                <option ${s.gender === 'ຍິງ' ? 'selected' : ''}>ຍິງ</option>
+              </select>
+            </div>
+
+            <div>
+              <label>ວັນເດືອນປີເກີດ * (ເລືອກແລ້ວຕື່ມຊ່ອງລຸ່ມໃຫ້ອັດຕະໂນມັດ)</label>
+              <input type="date" id="f_dob" value="${esc(s.dob)}" required onchange="autoFillDob()">
+            </div>
+
+            ${field('dob_lao', 'ວັນເດືອນປີເກີດ (ພາສາລາວ) ເຊັ່ນ 01 ກັນຍາ 2000')}
+            ${field('dob_eng', 'Date of birth (English) e.g. 01 January 2000')}
+
+            ${field('birth_village', 'ບ້ານເກີດ')}
+            ${field('birth_district', 'ເມືອງເກີດ')}
+
+            <div>
+              <label>ແຂວງເກີດ</label>
+              <input id="f_birth_province" list="province_list" value="${esc(s.birth_province)}">
+              <datalist id="province_list">
+                ${PROVINCES.map(p => `<option value="${p}">`).join('')}
+              </datalist>
+            </div>
+
+            ${field('high_school', 'ຮຽນຈົບ ມ.7 ຈາກ ມ.ສ ໃດ?')}
+
+            ${field('phone', 'ເບີໂທ')}
+            ${field('father_phone', 'ເບີໂທພໍ່')}
+            ${field('mother_phone', 'ເບີໂທແມ່')}
+            ${field('emergency_phone', 'ເບີໂທສຸກເສີນ')}
+
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn sec" onclick="closeModal()">ຍົກເລີກ</button>
+            <button class="btn ok">💾 ບັນທຶກ</button>
+          </div>
+        </form>`);
+    }
+
+    // ເລືອກວັນເກີດ → ຕື່ມວັນເກີດພາສາລາວ ແລະ ອັງກິດ ໃຫ້ອັດຕະໂນມັດ
+    function autoFillDob() {
+      const d = formatDates($('f_dob').value);
+      $('f_dob_lao').value = d.lo;
+      $('f_dob_eng').value = d.en;
+    }
+
+    // ເລືອກຮູບ → ຫຍໍ້ຂະໜາດ (ສູງສຸດ 320px) ກ່ອນເກັບ
+    function pickPhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const ratio = Math.min(1, 320 / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * ratio);
+          canvas.height = Math.round(img.height * ratio);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          currentPhoto = canvas.toDataURL('image/jpeg', 0.8);
+          $('f_preview').src = currentPhoto;
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function saveStudent(e, id) {
+      e.preventDefault();
+      if (id && !isAdmin()) return;   // ແກ້ໄຂຕ້ອງເປັນຜູ້ບໍລິຫານ
+
+      const val = key => $('f_' + key).value.trim();
+
+      const record = {
+        year_to_year: val('year_to_year'),
+        image_: currentPhoto || null,
+        full_name_lao: val('full_name_lao'),
+        full_name_eng: val('full_name_eng'),
+        gender: val('gender'),
+        dob: val('dob') || null,
+        dob_lao: val('dob_lao'),
+        dob_eng: val('dob_eng'),
+        birth_village: val('birth_village'),
+        birth_district: val('birth_district'),
+        birth_province: val('birth_province'),
+        high_school: val('high_school'),
+        phone: val('phone'),
+        father_phone: val('father_phone'),
+        mother_phone: val('mother_phone'),
+        emergency_phone: val('emergency_phone'),
+      };
+
+      const { error } = id
+        ? await sb.from(TABLE_STUDENT).update(record).eq('id', id)
+        : await sb.from(TABLE_STUDENT).insert(record);
+
+      if (error) return toast('ບັນທຶກບໍ່ສຳເລັດ: ' + error.message);
+
+      closeModal();
+      toast('ບັນທຶກສຳເລັດ');
+      reload();
+    }
+
+    async function deleteStudent(id) {
+      if (!isAdmin()) return;
+      if (!confirm('ຢືນຢັນການລົບຂໍ້ມູນນັກສຶກສາຄົນນີ້?')) return;
+
+      const { error } = await sb.from(TABLE_STUDENT).delete().eq('id', id);
+      if (error) return toast('ລົບບໍ່ສຳເລັດ: ' + error.message);
+
+      toast('ລົບແລ້ວ');
+      reload();
+    }
+
+
+    /* =========================================================
+       12) ລາຍງານ + ສົ່ງອອກ Excel
+       ========================================================= */
+    // ຖັນຂອງລາຍງານ (ໃຊ້ທັງໃນຕາຕະລາງ ແລະ ໄຟລ໌ Excel)
+    const REPORT_COLUMNS = [
+      { label: 'ລ/ດ',                          get: (s, i) => i + 1 },
+      { label: 'ສົກຮຽນ',                       get: s => s.year_to_year },
+      { label: 'ຊື່ ແລະ ນາມສະກຸນ (ລາວ)',       get: s => s.full_name_lao },
+      { label: 'Name and Surname (English)',   get: s => s.full_name_eng },
+      { label: 'ເພດ',                          get: s => s.gender },
+      { label: 'ວັນເດືອນປີເກີດ (ລາວ)',          get: s => s.dob_lao },
+      { label: 'Date of birth (English)',      get: s => s.dob_eng },
+      { label: 'ບ້ານເກີດ',                      get: s => s.birth_village },
+      { label: 'ເມືອງເກີດ',                     get: s => s.birth_district },
+      { label: 'ແຂວງເກີດ',                     get: s => s.birth_province },
+      { label: 'ຈົບ ມ.7 ຈາກ',                  get: s => s.high_school },
+      { label: 'ເບີໂທ',                         get: s => s.phone },
+      { label: 'ເບີໂທພໍ່',                      get: s => s.father_phone },
+      { label: 'ເບີໂທແມ່',                      get: s => s.mother_phone },
+      { label: 'ເບີໂທສຸກເສີນ',                  get: s => s.emergency_phone },
+    ];
+
+    function renderReports(el) {
+      el.innerHTML = `
+        <div class="card">
+          <h2>ລາຍງານປະຫວັດນັກສຶກສາ</h2>
+          ${notConnectedNote()}
+
+          <div class="toolbar">
+            <select onchange="reportFilter.year = this.value; drawReport()">
+              <option value="">ທຸກສົກຮຽນ</option>
+              ${yearOptions(reportFilter.year)}
+            </select>
+
+            <select onchange="reportFilter.gender = this.value; drawReport()">
+              <option value="">ທຸກເພດ</option>
+              <option ${reportFilter.gender === 'ຊາຍ' ? 'selected' : ''}>ຊາຍ</option>
+              <option ${reportFilter.gender === 'ຍິງ' ? 'selected' : ''}>ຍິງ</option>
+            </select>
+
+            <select onchange="reportFilter.province = this.value; drawReport()">
+              <option value="">ທຸກແຂວງ</option>
+              ${PROVINCES.map(p => `<option ${reportFilter.province === p ? 'selected' : ''}>${p}</option>`).join('')}
+            </select>
+
+            <input placeholder="🔍 ຄົ້ນຫາ" value="${esc(reportFilter.q)}"
+                   oninput="reportFilter.q = this.value; drawReport()">
+
+            <span class="spacer"></span>
+
+            <button class="btn ok" onclick="exportExcel()">⬇ ສົ່ງອອກ Excel</button>
+            <button class="btn sec" onclick="window.print()">🖨 ພິມ</button>
+          </div>
+
+          <div class="stats" id="r_stats"></div>
+
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>${REPORT_COLUMNS.map(c => `<th>${c.label}</th>`).join('')}</tr>
+              </thead>
+              <tbody id="r_rows"></tbody>
+            </table>
+          </div>
+        </div>`;
+
+      drawReport();
+    }
+
+    function drawReport() {
+      const list = filterStudents(reportFilter);
+      const male = list.filter(s => s.gender === 'ຊາຍ').length;
+
+      $('r_stats').innerHTML = `
+        <div class="stat"><b>${list.length}</b>ທັງໝົດ</div>
+        <div class="stat"><b>${male}</b>ຊາຍ</div>
+        <div class="stat"><b>${list.length - male}</b>ຍິງ</div>`;
+
+      $('r_rows').innerHTML = list.length
+        ? list.map((s, i) => `
+            <tr>${REPORT_COLUMNS.map(c => `<td>${esc(c.get(s, i))}</td>`).join('')}</tr>`).join('')
+        : `<tr><td colspan="${REPORT_COLUMNS.length}">ບໍ່ພົບຂໍ້ມູນ</td></tr>`;
+    }
+
+    function exportExcel() {
+      if (!window.XLSX) return toast('ໂຫຼດໄລບຣາຣີ Excel ບໍ່ໄດ້ (ກວດອິນເຕີເນັດ)');
+
+      const list = filterStudents(reportFilter);
+      if (!list.length) return toast('ບໍ່ມີຂໍ້ມູນສົ່ງອອກ');
+
+      const rows = list.map((s, i) => {
+        const row = {};
+        REPORT_COLUMNS.forEach(c => { row[c.label] = c.get(s, i); });
+        return row;
+      });
+
+      const sheet = XLSX.utils.json_to_sheet(rows);
+      sheet['!cols'] = REPORT_COLUMNS.map(c => ({ wch: Math.max(14, c.label.length + 2) }));
+
+      const book = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(book, sheet, 'Students');
+      XLSX.writeFile(book, `student_report_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    }
+
+
+    /* =========================================================
+       13) ເລີ່ມຕົ້ນ
+       ========================================================= */
+    (async function init() {
+      if (!sb) {
+        renderShell();
+        return;
+      }
+
+      // ກວດວ່າເຄີຍເຂົ້າສູ່ລະບົບຄ້າງໄວ້ບໍ
+      const { data } = await sb.auth.getSession();
+      state.user = data.session ? data.session.user : null;
+
+      // ເມື່ອສະຖານະເຂົ້າ/ອອກລະບົບປ່ຽນ ໃຫ້ແຕ້ມໜ້າໃໝ່
+      sb.auth.onAuthStateChange((event, session) => {
+        state.user = session ? session.user : null;
+        renderShell();
+      });
+
+      await loadAll();
+      renderShell();
+    })();
+  </script>
+
+</body>
+
+</html>
